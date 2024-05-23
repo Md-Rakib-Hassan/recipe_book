@@ -133,7 +133,7 @@ class RecipePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: recipe.instructions.map((e) => Text(
-          e,
+          "${recipe.instructions.indexOf(e)+1}) $e\n",
           maxLines: 3,
             textAlign: TextAlign.start,
           style: const TextStyle(
