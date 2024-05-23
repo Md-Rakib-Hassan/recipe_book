@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_book/models/recipe.dart';
+import 'package:recipe_book/pages/recipe_page.dart';
 import 'package:recipe_book/services/data_service.dart';
 
 class Home extends StatefulWidget {
@@ -117,7 +118,14 @@ class _HomeState extends State<Home> {
                 itemBuilder:(context,index){
                 Recipe recipe=snapshot.data![index];
                   return ListTile(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return RecipePage(
+                              recipe: recipe,
+                            );
+                          }));
+                    },
                     contentPadding: const EdgeInsets.only(
                       top: 20.0,
                     ),
