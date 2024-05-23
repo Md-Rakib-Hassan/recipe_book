@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
   Widget _recipesList(){
     return Expanded(
         child:FutureBuilder(
-          future: DataService().getRecipe(),
+          future: DataService().getRecipe(_mealTypeFilter),
           builder:(context,snapshot){
             if(snapshot.connectionState==ConnectionState.waiting){
               return Center(child: CircularProgressIndicator(),
@@ -117,6 +117,7 @@ class _HomeState extends State<Home> {
                 itemBuilder:(context,index){
                 Recipe recipe=snapshot.data![index];
                   return ListTile(
+                    onTap: (){},
                     contentPadding: const EdgeInsets.only(
                       top: 20.0,
                     ),
