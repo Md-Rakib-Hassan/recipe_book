@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_book/models/recipe.dart';
 import 'package:recipe_book/services/data_service.dart';
 
 class Home extends StatefulWidget {
@@ -10,6 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  String _mealTypeFilter="";
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -26,7 +30,8 @@ class _HomeState extends State<Home> {
   }
 
   Widget _UI(){
-    return Container(
+    return Padding(
+      padding: EdgeInsets.all(10.0),
       child: Column(
         children: [
 
@@ -46,28 +51,44 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: FilledButton(
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  _mealTypeFilter="snack";
+                });
+              },
               child: const Text("🍕 Snack"),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: FilledButton(
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  _mealTypeFilter="breakfast";
+                });
+              },
               child: const Text("🍛 Breakfast"),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: FilledButton(
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  _mealTypeFilter="lunch";
+                });
+              },
               child: const Text("🍗 Lunch"),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: FilledButton(
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  _mealTypeFilter="dinner";
+                });
+              },
               child: const Text("🍜 Dinner"),
             ),
           ),
@@ -91,8 +112,29 @@ class _HomeState extends State<Home> {
                 child: Text("Unable to load data"),
               );
             }
-            return Container();
-          },)
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+                itemBuilder:(context,index){
+                Recipe recipe=snapshot.data![index];
+                  return ListTile(
+                    contentPadding: const EdgeInsets.only(
+                      top: 20.0,
+                    ),
+
+                    isThreeLine: true,
+                    leading: Image.network(recipe.image),
+                    subtitle: Text("${recipe.cuisine}\nDifficulty: ${recipe.difficulty}"),
+                    title: Text(
+                      recipe.name,
+                    ),
+                    trailing:  Text("${recipe.rating.toString()}⭐",
+                    style:  TextStyle(
+                      fontSize: 15,
+                    ),),
+                  );
+                });
+          },
+        )
     );
   }
 }
